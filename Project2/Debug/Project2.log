@@ -1,0 +1,7 @@
+﻿  Game.cpp
+c:\users\rajaa\source\repos\project2\project2\game.h(55): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Home.cpp
+c:\users\rajaa\source\repos\project2\project2\game.h(55): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Generating Code...
+  Game.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
+  Project2.vcxproj -> C:\Users\rajaa\source\repos\Project2\Debug\Project2.exe
