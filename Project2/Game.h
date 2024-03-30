@@ -80,79 +80,131 @@ namespace Project2 {
 		}
 
 	private:
-
 		void DecalageForme(String^ forme) {
-			// Parcourir la liste pour collecter toutes les couleurs existantes pour la forme spécifiée
-			array<String^>^ couleurs = gcnew array<String^>(8); // Taille maximale de 8 couleurs
-			int couleurIndex = 0;
-
-			Piece^ currentPiece = head;
-			while (currentPiece != nullptr) {
-				if (currentPiece->forme == forme) {
-					couleurs[couleurIndex] = currentPiece->color;
-					couleurIndex++;
-				}
-				currentPiece = currentPiece->next;
-			}
-
-			// Si aucune couleur n'a été trouvée, sortir de la fonction
-			if (couleurIndex == 0) {
+			// Vérifier si la liste de pièces est vide
+			if (head == nullptr) {
+				MessageBox::Show("La liste de pièces est vide", "Erreur");
 				return;
 			}
 
-			// Refaire le parcours pour changer les couleurs des formes en effectuant le décalage
-			currentPiece = head;
+			// Taille maximale du tableau
+			const int maxSize = 15;
+
+			// Tableaux pour stocker les couleurs et les tags
+			array<String^>^ colorsArray = gcnew array<String^>(maxSize);
+			array<String^>^ tagsArray = gcnew array<String^>(maxSize);
+
+			// Indice pour parcourir le tableau
 			int index = 0;
-			String^ firstColor = couleurs[0]; // Stocker la première couleur pour plus tard
+
+			// Parcourir la liste des pièces pour stocker les couleurs et les tags
+			Piece^ currentPiece = head;
 			while (currentPiece != nullptr) {
+				// Vérifier si la pièce a la forme spécifiée
 				if (currentPiece->forme == forme) {
-					// Changer la couleur de la forme en utilisant le tableau de couleurs
-					currentPiece->color = couleurs[(index + 1) % couleurIndex]; // Utilisation du modulo pour revenir à la première couleur
+					// Ajouter la couleur et le tag au tableau respectif
+					colorsArray[index] = currentPiece->color;
+					tagsArray[index] = currentPiece->path;
+
+					// Incrémenter l'indice
 					index++;
+
+					// Vérifier si on a atteint la taille maximale du tableau
+					if (index >= maxSize) {
+						break;
+					}
 				}
 				currentPiece = currentPiece->next;
 			}
 
-			// Mettre à jour l'affichage des PictureBoxes
+			// Si aucune couleur n'a été trouvée pour la forme spécifiée, afficher un message
+			if (index == 0) {
+				MessageBox::Show("Aucune pièce de la forme spécifiée n'a été trouvée", "Info");
+				return;
+			}
+
+			// Parcourir à nouveau la liste des pièces pour affecter les couleurs et les tags stockés dans les tableaux
+			currentPiece = head;
+			int colorIndex = 1; // Commencer par l'index 1 dans le tableau des couleurs
+			while (currentPiece != nullptr) {
+				// Vérifier si la pièce a la forme spécifiée
+				if (currentPiece->forme == forme) {
+					// Affecter la couleur et le tag stockés dans les tableaux à cette pièce
+					currentPiece->color = colorsArray[colorIndex];
+					currentPiece->path = tagsArray[colorIndex];
+					MessageBox::Show(currentPiece->color);
+					// Incrémenter l'indice du tableau des couleurs
+					colorIndex = (colorIndex + 1) % index; // Réinitialiser à 0 si on atteint la fin du tableau
+				}
+
+				currentPiece = currentPiece->next;
+			}
+
 			AfficherPieces();
 		}
-
-
-
 
 		void DecalageCouleur(String^ couleur) {
+			// Vérifier si la liste de pièces est vide
+			if (head == nullptr) {
+				MessageBox::Show("La liste de pièces est vide", "Erreur");
+				return;
+			}
+
+			// Taille maximale du tableau
+			const int maxSize = 15;
+
+			// Tableaux pour stocker les formes et les tags
+			array<String^>^ formesArray = gcnew array<String^>(maxSize);
+			array<String^>^ tagsArray = gcnew array<String^>(maxSize);
+
+			// Indice pour parcourir le tableau
+			int index = 0;
+
+			// Parcourir la liste des pièces pour stocker les formes et les tags
 			Piece^ currentPiece = head;
-			Piece^ previousPiece = nullptr;
 			while (currentPiece != nullptr) {
+				// Vérifier si la pièce a la couleur spécifiée
 				if (currentPiece->color == couleur) {
-					// Décaler circulairement à gauche toutes les pièces ayant la couleur spécifiée
-					if (currentPiece != head) {
-						// La pièce à décaler n'est pas la première dans la liste
-						previousPiece->next = currentPiece->next;
-						if (currentPiece == tail) {
-							// La pièce à décaler est la dernière dans la liste
-							tail = previousPiece;
-						}
-						else {
-							currentPiece->next->previous = previousPiece;
-						}
-						tail->next = currentPiece;
-						currentPiece->previous = tail;
-						tail = currentPiece;
-						tail->next = nullptr;
+					// Ajouter la forme et le tag au tableau respectif
+					formesArray[index] = currentPiece->forme;
+					tagsArray[index] = currentPiece->path;
+
+					// Incrémenter l'indice
+					index++;
+
+					// Vérifier si on a atteint la taille maximale du tableau
+					if (index >= maxSize) {
+						break;
 					}
 				}
-				// Avancer au prochain élément de la liste
-				if (currentPiece != nullptr) {
-					previousPiece = currentPiece;
-					currentPiece = currentPiece->next;
-				}
+				currentPiece = currentPiece->next;
 			}
-			// Mettre à jour l'affichage des PictureBoxes
+
+			// Si aucune forme n'a été trouvée pour la couleur spécifiée, afficher un message
+			if (index == 0) {
+				MessageBox::Show("Aucune pièce de la couleur spécifiée n'a été trouvée", "Info");
+				return;
+			}
+
+			// Parcourir à nouveau la liste des pièces pour affecter les formes et les tags stockés dans les tableaux
+			currentPiece = head;
+			int formeIndex = 1; // Commencer par l'index 1 dans le tableau des formes
+			while (currentPiece != nullptr) {
+				// Vérifier si la pièce a la couleur spécifiée
+				if (currentPiece->color == couleur) {
+					// Affecter la forme et le tag stockés dans les tableaux à cette pièce
+					currentPiece->forme = formesArray[formeIndex];
+					currentPiece->path = tagsArray[formeIndex];
+					MessageBox::Show(currentPiece->forme);
+					// Incrémenter l'indice du tableau des formes
+					formeIndex = (formeIndex + 1) % index; // Réinitialiser à 0 si on atteint la fin du tableau
+				}
+
+				currentPiece = currentPiece->next;
+			}
+
 			AfficherPieces();
 		}
-
-
 
 		void RemoveThreeAdjacentPieces() {
 			Piece^ currentPiece = head;
@@ -219,9 +271,26 @@ namespace Project2 {
 			AfficherPieces();
 		}
 
+		void ObtenirFormeEtCouleur(PictureBox^ pictureBox, String^% forme, String^% color) {
+			// Récupérer le chemin de l'image de pictureBox
+			String^ cheminImage = safe_cast<String^>(pictureBox->Tag);
 
+			// Vérifier si le chemin de l'image est valide
+			if (!String::IsNullOrEmpty(cheminImage)) {
+				String^ nomImage = Path::GetFileNameWithoutExtension(cheminImage); // Récupérer le nom de l'image sans l'extension
+				array<String^>^ parties = nomImage->Split('_'); // Diviser le nom en fonction du caractère '_'
 
-
+				// Vérifier s'il y a au moins deux parties dans le nom de l'image
+				if (parties->Length >= 2) {
+					forme = parties[0]; // Stocker la première partie dans la variable forme
+					color = parties[1]; // Stocker la deuxième partie dans la variable color
+				}
+				else {
+					// Gérer le cas où le nom de l'image n'a pas été divisé correctement
+					MessageBox::Show("Le nom de l'image n'a pas été divisé correctement.");
+				}
+			}
+		}
 
 		// Fonction pour afficher une image aléatoire dans pictureBox1
 		void AfficherImageAleatoire()
@@ -233,6 +302,7 @@ namespace Project2 {
 			pictureBox1->Image = nullptr;
 			pictureBox1->Tag = imagePaths[index];
 		}
+
 		void AddPieceAtBeginning(String^ forme, String^ color, String^ path) {
 			if (count < maxSize) {
 				Piece^ newPiece = gcnew Piece();
@@ -273,27 +343,35 @@ namespace Project2 {
 				switch (i) {
 				case 0:
 					pictureBox2->BackgroundImage = (path != nullptr) ? Image::FromFile(path) : nullptr;
+					pictureBox2->Tag = path; // Ajout du chemin d'accès à l'image dans le tag
 					break;
 				case 1:
 					pictureBox3->BackgroundImage = (path != nullptr) ? Image::FromFile(path) : nullptr;
+					pictureBox3->Tag = path;
 					break;
 				case 2:
 					pictureBox4->BackgroundImage = (path != nullptr) ? Image::FromFile(path) : nullptr;
+					pictureBox4->Tag = path;
 					break;
 				case 3:
 					pictureBox5->BackgroundImage = (path != nullptr) ? Image::FromFile(path) : nullptr;
+					pictureBox5->Tag = path;
 					break;
 				case 4:
 					pictureBox6->BackgroundImage = (path != nullptr) ? Image::FromFile(path) : nullptr;
+					pictureBox6->Tag = path;
 					break;
 				case 5:
 					pictureBox7->BackgroundImage = (path != nullptr) ? Image::FromFile(path) : nullptr;
+					pictureBox7->Tag = path;
 					break;
 				case 6:
 					pictureBox8->BackgroundImage = (path != nullptr) ? Image::FromFile(path) : nullptr;
+					pictureBox8->Tag = path;
 					break;
 				case 7:
 					pictureBox9->BackgroundImage = (path != nullptr) ? Image::FromFile(path) : nullptr;
+					pictureBox9->Tag = path;
 					break;
 				}
 
@@ -306,33 +384,41 @@ namespace Project2 {
 				switch (i) {
 				case 0:
 					pictureBox2->BackgroundImage = nullptr;
+					pictureBox2->Tag = nullptr; // Affectation de null au tag
 					break;
 				case 1:
 					pictureBox3->BackgroundImage = nullptr;
+					pictureBox3->Tag = nullptr;
 					break;
 				case 2:
 					pictureBox4->BackgroundImage = nullptr;
+					pictureBox4->Tag = nullptr;
 					break;
 				case 3:
 					pictureBox5->BackgroundImage = nullptr;
+					pictureBox5->Tag = nullptr;
 					break;
 				case 4:
 					pictureBox6->BackgroundImage = nullptr;
+					pictureBox6->Tag = nullptr;
 					break;
 				case 5:
 					pictureBox7->BackgroundImage = nullptr;
+					pictureBox7->Tag = nullptr;
 					break;
 				case 6:
 					pictureBox8->BackgroundImage = nullptr;
+					pictureBox8->Tag = nullptr;
 					break;
 				case 7:
 					pictureBox9->BackgroundImage = nullptr;
+					pictureBox9->Tag = nullptr;
 					break;
 				}
 				i++;
 			}
-		}
 
+		}
 
 		void AddPieceAtEnd(String^ forme, String^ color, String^ path) {
 			if (count < maxSize) {
@@ -361,8 +447,6 @@ namespace Project2 {
 				MessageBox::Show("La liste est pleine, ne peut pas ajouter plus de pièces.");
 			}
 		}
-
-
 
 	protected:
 		/// <summary>
@@ -633,7 +717,7 @@ namespace Project2 {
 			this->pictureBox9->Size = System::Drawing::Size(80, 80);
 			this->pictureBox9->TabIndex = 28;
 			this->pictureBox9->TabStop = false;
-			this->pictureBox9->DoubleClick += gcnew System::EventHandler(this, &Game::pictureBox8_Click);
+			this->pictureBox9->DoubleClick += gcnew System::EventHandler(this, &Game::pictureBox9_DoubleClick);
 			// 
 			// panel2
 			// 
@@ -783,40 +867,7 @@ private: System::Void button3_Click(System::Object^  sender, System::EventArgs^ 
 private: System::Void panel2_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
 }
 private: System::Void pictureBox8_Click(System::Object^  sender, System::EventArgs^  e) {
-	// Récupérer le chemin de l'image de pictureBox1
-	String^ cheminImage = safe_cast<String^>(pictureBox1->Tag);
-	String^ forme;
-	String^ color;
-	// Vérifier si le chemin de l'image est valide
-	if (!String::IsNullOrEmpty(cheminImage)) {
-		String^ nomImage = Path::GetFileNameWithoutExtension(cheminImage); // Récupérer le nom de l'image sans l'extension
-		array<String^>^ parties = nomImage->Split('_'); // Diviser le nom en fonction du caractère '_'
-
-		// Vérifier s'il y a au moins deux parties dans le nom de l'image
-		if (parties->Length >= 2) {
-			forme = parties[0]; // Stocker la première partie dans la variable forme
-			color = parties[1]; // Stocker la deuxième partie dans la variable color
-
-			// Afficher les valeurs des variables forme et color
-		}
-		else {
-			// Gérer le cas où le nom de l'image n'a pas été divisé correctement
-			MessageBox::Show("Le nom de l'image n'a pas été divisé correctement.");
-		}
-	}
 	
-	// Vérifier si l'utilisateur veut effectuer un décalage en fonction de la forme ou de la couleur
-	if (radioButton1->Checked) {
-		// Décalage en fonction de la forme
-		DecalageForme("ca");
-	}
-	else if (radioButton2->Checked) {
-		DecalageCouleur(color);
-	}
-	else {
-		// Aucune option sélectionnée, afficher un message d'erreur
-		MessageBox::Show("Veuillez sélectionner une option (forme ou couleur) pour effectuer un décalage.");
-	}
 }
 
 private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -865,6 +916,25 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 	}
 }
 private: System::Void label2_Click(System::Object^  sender, System::EventArgs^  e) {
+}
+private: System::Void pictureBox9_DoubleClick(System::Object^  sender, System::EventArgs^  e) {
+	String^ forme;
+	String^ color;
+	ObtenirFormeEtCouleur(pictureBox9, forme, color);
+	// Utilisez les variables forme et color comme vous le souhaitez
+	MessageBox::Show(forme);
+	// Vérifier si l'utilisateur veut effectuer un décalage en fonction de la forme ou de la couleur
+	if (radioButton1->Checked) {
+		// Décalage en fonction de la forme
+		DecalageForme(forme);
+	}
+	else if (radioButton2->Checked) {
+		DecalageCouleur(color);
+	}
+	else {
+		// Aucune option sélectionnée, afficher un message d'erreur
+		MessageBox::Show("Veuillez sélectionner une option (forme ou couleur) pour effectuer un décalage.");
+	}
 }
 };
 }
