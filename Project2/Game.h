@@ -36,10 +36,23 @@ namespace Project2 {
 		Piece^ tail;
 		int count;
 		int maxSize;
+		bool premierAppel = true;
 	private: System::Windows::Forms::Label^  label2;
 	private: System::Windows::Forms::RadioButton^  radioButton1;
 	private: System::Windows::Forms::RadioButton^  radioButton2;
 	private: System::Windows::Forms::Panel^  panel3;
+	private: System::Windows::Forms::PictureBox^  pictureBox16;
+	private: System::Windows::Forms::PictureBox^  pictureBox15;
+	private: System::Windows::Forms::PictureBox^  pictureBox13;
+	private: System::Windows::Forms::PictureBox^  pictureBox12;
+	private: System::Windows::Forms::PictureBox^  pictureBox14;
+	private: System::Windows::Forms::PictureBox^  pictureBox11;
+	private: System::Windows::Forms::PictureBox^  pictureBox10;
+	private: System::Windows::Forms::Panel^  panel4;
+	private: System::Windows::Forms::PictureBox^  pictureBox20;
+	private: System::Windows::Forms::PictureBox^  pictureBox19;
+	private: System::Windows::Forms::PictureBox^  pictureBox18;
+	private: System::Windows::Forms::PictureBox^  pictureBox17;
 			 int score = 0;
 	public:
 		Game(void)
@@ -49,7 +62,7 @@ namespace Project2 {
 			head = nullptr;
 			tail = nullptr;
 			count = 0;
-			maxSize = 8; // Taille maximale de la liste
+			maxSize = 15; // Taille maximale de la liste
 
 			// Initialiser le générateur de nombres aléatoires avec le temps actuel
 			srand(time(0));
@@ -297,11 +310,61 @@ namespace Project2 {
 		{
 			// Générer un indice aléatoire entre 0 et 15 inclusivement
 			int index = rand() % 16;
-			// Charger l'image correspondante à l'indice aléatoire dans pictureBox1
-			pictureBox1->BackgroundImage = Image::FromFile(imagePaths[index]);
+
+			// Récupérer le chemin de l'image correspondante à l'indice aléatoire
+			String^ imagePath = imagePaths[index];
 			pictureBox1->Image = nullptr;
-			pictureBox1->Tag = imagePaths[index];
+
+			// Pour le premier appel, mettre à jour toutes les PictureBox
+			if (premierAppel)
+			{
+				// PictureBox1
+				pictureBox1->BackgroundImage = Image::FromFile(imagePaths[rand() % 16]);
+				pictureBox1->Tag = imagePaths[rand() % 16];
+
+				// PictureBox17
+				pictureBox17->BackgroundImage = Image::FromFile(imagePaths[rand() % 16]);
+				pictureBox17->Tag = imagePaths[rand() % 16];
+
+				// PictureBox18
+				pictureBox18->BackgroundImage = Image::FromFile(imagePaths[rand() % 16]);
+				pictureBox18->Tag = imagePaths[rand() % 16];
+
+				// PictureBox19
+				pictureBox19->BackgroundImage = Image::FromFile(imagePaths[rand() % 16]);
+				pictureBox19->Tag = imagePaths[rand() % 16];
+
+				// PictureBox20
+				pictureBox20->BackgroundImage = Image::FromFile(imagePaths[rand() % 16]);
+				pictureBox20->Tag = imagePaths[rand() % 16];
+
+				premierAppel = false; // Marquer le premier appel comme effectué
+			}
+			else
+			{
+				// Sauvegarder l'image de pictureBox1
+				pictureBox1->BackgroundImage = pictureBox17->BackgroundImage;
+				pictureBox1->Tag = pictureBox17->Tag;
+
+				// Déplacer l'image de pictureBox17 à pictureBox18
+				pictureBox17->BackgroundImage = pictureBox18->BackgroundImage;
+				pictureBox17->Tag = pictureBox18->Tag;
+
+				// Déplacer l'image de pictureBox18 à pictureBox19
+				pictureBox18->BackgroundImage = pictureBox19->BackgroundImage;
+				pictureBox18->Tag = pictureBox19->Tag;
+
+				// Déplacer l'image de pictureBox19 à pictureBox20
+				pictureBox19->BackgroundImage = pictureBox20->BackgroundImage;
+				pictureBox19->Tag = pictureBox20->Tag;
+
+				// Charger la nouvelle image dans pictureBox20
+				pictureBox20->BackgroundImage = Image::FromFile(imagePath);
+				pictureBox20->Tag = imagePath;
+			}
 		}
+
+
 
 		void AddPieceAtBeginning(String^ forme, String^ color, String^ path) {
 			if (count < maxSize) {
@@ -335,8 +398,8 @@ namespace Project2 {
 			Piece^ currentPiece = head; // Commencer à partir de la première pièce
 			int i = 0; // Compteur pour le nombre de pièces affichées
 
-			// Parcourir les 8 PictureBoxes
-			while (i < 8 && currentPiece != nullptr) {
+			// Parcourir les PictureBoxes
+			while (i < 16 && currentPiece != nullptr) {
 				String^ path = currentPiece->path; // Récupérer le chemin de l'image de la pièce
 
 				// Affecter le chemin de l'image au background du PictureBox correspondant
@@ -373,6 +436,34 @@ namespace Project2 {
 					pictureBox9->BackgroundImage = (path != nullptr) ? Image::FromFile(path) : nullptr;
 					pictureBox9->Tag = path;
 					break;
+				case 8:
+					pictureBox10->BackgroundImage = (path != nullptr) ? Image::FromFile(path) : nullptr;
+					pictureBox10->Tag = path;
+					break;
+				case 9:
+					pictureBox11->BackgroundImage = (path != nullptr) ? Image::FromFile(path) : nullptr;
+					pictureBox11->Tag = path;
+					break;
+				case 10:
+					pictureBox12->BackgroundImage = (path != nullptr) ? Image::FromFile(path) : nullptr;
+					pictureBox12->Tag = path;
+					break;
+				case 11:
+					pictureBox13->BackgroundImage = (path != nullptr) ? Image::FromFile(path) : nullptr;
+					pictureBox13->Tag = path;
+					break;
+				case 12:
+					pictureBox14->BackgroundImage = (path != nullptr) ? Image::FromFile(path) : nullptr;
+					pictureBox14->Tag = path;
+					break;
+				case 13:
+					pictureBox15->BackgroundImage = (path != nullptr) ? Image::FromFile(path) : nullptr;
+					pictureBox15->Tag = path;
+					break;
+				case 14:
+					pictureBox16->BackgroundImage = (path != nullptr) ? Image::FromFile(path) : nullptr;
+					pictureBox16->Tag = path;
+					break;
 				}
 
 				currentPiece = currentPiece->next; // Passer à la pièce suivante
@@ -380,7 +471,7 @@ namespace Project2 {
 			}
 
 			// Mettre les BackgroundImages restants à null
-			while (i < 8) {
+			while (i < 16) {
 				switch (i) {
 				case 0:
 					pictureBox2->BackgroundImage = nullptr;
@@ -414,10 +505,37 @@ namespace Project2 {
 					pictureBox9->BackgroundImage = nullptr;
 					pictureBox9->Tag = nullptr;
 					break;
+				case 8:
+					pictureBox10->BackgroundImage = nullptr;
+					pictureBox10->Tag = nullptr;
+					break;
+				case 9:
+					pictureBox11->BackgroundImage = nullptr;
+					pictureBox11->Tag = nullptr;
+					break;
+				case 10:
+					pictureBox12->BackgroundImage = nullptr;
+					pictureBox12->Tag = nullptr;
+					break;
+				case 11:
+					pictureBox13->BackgroundImage = nullptr;
+					pictureBox13->Tag = nullptr;
+					break;
+				case 12:
+					pictureBox14->BackgroundImage = nullptr;
+					pictureBox14->Tag = nullptr;
+					break;
+				case 13:
+					pictureBox15->BackgroundImage = nullptr;
+					pictureBox15->Tag = nullptr;
+					break;
+				case 14:
+					pictureBox16->BackgroundImage = nullptr;
+					pictureBox16->Tag = nullptr;
+					break;
 				}
 				i++;
 			}
-
 		}
 
 		void AddPieceAtEnd(String^ forme, String^ color, String^ path) {
@@ -510,10 +628,22 @@ namespace Project2 {
 			this->nextpanel = (gcnew System::Windows::Forms::Panel());
 			this->pictureBox9 = (gcnew System::Windows::Forms::PictureBox());
 			this->panel2 = (gcnew System::Windows::Forms::Panel());
+			this->pictureBox16 = (gcnew System::Windows::Forms::PictureBox());
+			this->pictureBox15 = (gcnew System::Windows::Forms::PictureBox());
+			this->pictureBox13 = (gcnew System::Windows::Forms::PictureBox());
+			this->pictureBox12 = (gcnew System::Windows::Forms::PictureBox());
+			this->pictureBox14 = (gcnew System::Windows::Forms::PictureBox());
+			this->pictureBox11 = (gcnew System::Windows::Forms::PictureBox());
+			this->pictureBox10 = (gcnew System::Windows::Forms::PictureBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->radioButton1 = (gcnew System::Windows::Forms::RadioButton());
 			this->radioButton2 = (gcnew System::Windows::Forms::RadioButton());
 			this->panel3 = (gcnew System::Windows::Forms::Panel());
+			this->panel4 = (gcnew System::Windows::Forms::Panel());
+			this->pictureBox20 = (gcnew System::Windows::Forms::PictureBox());
+			this->pictureBox19 = (gcnew System::Windows::Forms::PictureBox());
+			this->pictureBox18 = (gcnew System::Windows::Forms::PictureBox());
+			this->pictureBox17 = (gcnew System::Windows::Forms::PictureBox());
 			this->panel1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
@@ -526,7 +656,19 @@ namespace Project2 {
 			this->nextpanel->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox9))->BeginInit();
 			this->panel2->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox16))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox15))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox13))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox12))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox14))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox11))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox10))->BeginInit();
 			this->panel3->SuspendLayout();
+			this->panel4->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox20))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox19))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox18))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox17))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// button1
@@ -541,7 +683,7 @@ namespace Project2 {
 			this->button1->Font = (gcnew System::Drawing::Font(L"SimSun", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button1->ForeColor = System::Drawing::Color::White;
-			this->button1->Location = System::Drawing::Point(611, 14);
+			this->button1->Location = System::Drawing::Point(1122, 19);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(186, 38);
 			this->button1->TabIndex = 12;
@@ -556,7 +698,7 @@ namespace Project2 {
 				static_cast<System::Byte>(0)));
 			this->label3->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(0)),
 				static_cast<System::Int32>(static_cast<System::Byte>(64)));
-			this->label3->Location = System::Drawing::Point(329, 415);
+			this->label3->Location = System::Drawing::Point(598, 419);
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(175, 46);
 			this->label3->TabIndex = 14;
@@ -569,9 +711,9 @@ namespace Project2 {
 			this->panel1->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
 			this->panel1->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
 			this->panel1->Controls->Add(this->button1);
-			this->panel1->Location = System::Drawing::Point(12, 12);
+			this->panel1->Location = System::Drawing::Point(3, 12);
 			this->panel1->Name = L"panel1";
-			this->panel1->Size = System::Drawing::Size(811, 64);
+			this->panel1->Size = System::Drawing::Size(1336, 64);
 			this->panel1->TabIndex = 15;
 			this->panel1->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Game::panel1_Paint);
 			// 
@@ -585,7 +727,7 @@ namespace Project2 {
 			this->pictureBox1->Size = System::Drawing::Size(80, 80);
 			this->pictureBox1->TabIndex = 16;
 			this->pictureBox1->TabStop = false;
-			this->pictureBox1->Tag = L"C:/Users/rajaa/source/repos/Project2/carre_rouge.png";
+			this->pictureBox1->Tag = L"";
 			// 
 			// label1
 			// 
@@ -692,7 +834,7 @@ namespace Project2 {
 			this->button3->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->button3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 48, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->button3->Location = System::Drawing::Point(755, 180);
+			this->button3->Location = System::Drawing::Point(1257, 167);
 			this->button3->Name = L"button3";
 			this->button3->Size = System::Drawing::Size(56, 54);
 			this->button3->TabIndex = 26;
@@ -704,7 +846,7 @@ namespace Project2 {
 			this->nextpanel->Controls->Add(this->pictureBox1);
 			this->nextpanel->Location = System::Drawing::Point(96, 82);
 			this->nextpanel->Name = L"nextpanel";
-			this->nextpanel->Size = System::Drawing::Size(109, 114);
+			this->nextpanel->Size = System::Drawing::Size(100, 109);
 			this->nextpanel->TabIndex = 27;
 			this->nextpanel->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Game::panel2_Paint);
 			// 
@@ -722,6 +864,13 @@ namespace Project2 {
 			// panel2
 			// 
 			this->panel2->BackColor = System::Drawing::Color::Gray;
+			this->panel2->Controls->Add(this->pictureBox16);
+			this->panel2->Controls->Add(this->pictureBox15);
+			this->panel2->Controls->Add(this->pictureBox13);
+			this->panel2->Controls->Add(this->pictureBox12);
+			this->panel2->Controls->Add(this->pictureBox14);
+			this->panel2->Controls->Add(this->pictureBox11);
+			this->panel2->Controls->Add(this->pictureBox10);
 			this->panel2->Controls->Add(this->pictureBox9);
 			this->panel2->Controls->Add(this->pictureBox8);
 			this->panel2->Controls->Add(this->pictureBox7);
@@ -730,10 +879,87 @@ namespace Project2 {
 			this->panel2->Controls->Add(this->pictureBox4);
 			this->panel2->Controls->Add(this->pictureBox3);
 			this->panel2->Controls->Add(this->pictureBox2);
-			this->panel2->Location = System::Drawing::Point(52, 256);
+			this->panel2->Location = System::Drawing::Point(12, 256);
 			this->panel2->Name = L"panel2";
-			this->panel2->Size = System::Drawing::Size(727, 105);
+			this->panel2->Size = System::Drawing::Size(1312, 105);
 			this->panel2->TabIndex = 29;
+			// 
+			// pictureBox16
+			// 
+			this->pictureBox16->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox16.BackgroundImage")));
+			this->pictureBox16->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
+			this->pictureBox16->Location = System::Drawing::Point(1221, 13);
+			this->pictureBox16->Name = L"pictureBox16";
+			this->pictureBox16->Size = System::Drawing::Size(80, 80);
+			this->pictureBox16->TabIndex = 28;
+			this->pictureBox16->TabStop = false;
+			this->pictureBox16->DoubleClick += gcnew System::EventHandler(this, &Game::pictureBox9_DoubleClick);
+			// 
+			// pictureBox15
+			// 
+			this->pictureBox15->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox15.BackgroundImage")));
+			this->pictureBox15->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
+			this->pictureBox15->Location = System::Drawing::Point(1135, 13);
+			this->pictureBox15->Name = L"pictureBox15";
+			this->pictureBox15->Size = System::Drawing::Size(80, 80);
+			this->pictureBox15->TabIndex = 28;
+			this->pictureBox15->TabStop = false;
+			this->pictureBox15->DoubleClick += gcnew System::EventHandler(this, &Game::pictureBox9_DoubleClick);
+			// 
+			// pictureBox13
+			// 
+			this->pictureBox13->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox13.BackgroundImage")));
+			this->pictureBox13->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
+			this->pictureBox13->Location = System::Drawing::Point(964, 13);
+			this->pictureBox13->Name = L"pictureBox13";
+			this->pictureBox13->Size = System::Drawing::Size(80, 80);
+			this->pictureBox13->TabIndex = 28;
+			this->pictureBox13->TabStop = false;
+			this->pictureBox13->DoubleClick += gcnew System::EventHandler(this, &Game::pictureBox9_DoubleClick);
+			// 
+			// pictureBox12
+			// 
+			this->pictureBox12->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox12.BackgroundImage")));
+			this->pictureBox12->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
+			this->pictureBox12->Location = System::Drawing::Point(878, 13);
+			this->pictureBox12->Name = L"pictureBox12";
+			this->pictureBox12->Size = System::Drawing::Size(80, 80);
+			this->pictureBox12->TabIndex = 28;
+			this->pictureBox12->TabStop = false;
+			this->pictureBox12->DoubleClick += gcnew System::EventHandler(this, &Game::pictureBox9_DoubleClick);
+			// 
+			// pictureBox14
+			// 
+			this->pictureBox14->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox14.BackgroundImage")));
+			this->pictureBox14->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
+			this->pictureBox14->Location = System::Drawing::Point(1049, 13);
+			this->pictureBox14->Name = L"pictureBox14";
+			this->pictureBox14->Size = System::Drawing::Size(80, 80);
+			this->pictureBox14->TabIndex = 28;
+			this->pictureBox14->TabStop = false;
+			this->pictureBox14->DoubleClick += gcnew System::EventHandler(this, &Game::pictureBox9_DoubleClick);
+			// 
+			// pictureBox11
+			// 
+			this->pictureBox11->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox11.BackgroundImage")));
+			this->pictureBox11->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
+			this->pictureBox11->Location = System::Drawing::Point(792, 13);
+			this->pictureBox11->Name = L"pictureBox11";
+			this->pictureBox11->Size = System::Drawing::Size(80, 80);
+			this->pictureBox11->TabIndex = 28;
+			this->pictureBox11->TabStop = false;
+			this->pictureBox11->DoubleClick += gcnew System::EventHandler(this, &Game::pictureBox9_DoubleClick);
+			// 
+			// pictureBox10
+			// 
+			this->pictureBox10->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox10.BackgroundImage")));
+			this->pictureBox10->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
+			this->pictureBox10->Location = System::Drawing::Point(706, 13);
+			this->pictureBox10->Name = L"pictureBox10";
+			this->pictureBox10->Size = System::Drawing::Size(80, 80);
+			this->pictureBox10->TabIndex = 28;
+			this->pictureBox10->TabStop = false;
+			this->pictureBox10->DoubleClick += gcnew System::EventHandler(this, &Game::pictureBox9_DoubleClick);
 			// 
 			// label2
 			// 
@@ -784,10 +1010,63 @@ namespace Project2 {
 			this->panel3->Controls->Add(this->radioButton2);
 			this->panel3->Controls->Add(this->label2);
 			this->panel3->Controls->Add(this->radioButton1);
-			this->panel3->Location = System::Drawing::Point(348, 97);
+			this->panel3->Location = System::Drawing::Point(838, 97);
 			this->panel3->Name = L"panel3";
 			this->panel3->Size = System::Drawing::Size(475, 59);
 			this->panel3->TabIndex = 33;
+			// 
+			// panel4
+			// 
+			this->panel4->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(128)), static_cast<System::Int32>(static_cast<System::Byte>(255)),
+				static_cast<System::Int32>(static_cast<System::Byte>(128)));
+			this->panel4->Controls->Add(this->pictureBox20);
+			this->panel4->Controls->Add(this->pictureBox19);
+			this->panel4->Controls->Add(this->pictureBox18);
+			this->panel4->Controls->Add(this->pictureBox17);
+			this->panel4->Location = System::Drawing::Point(202, 82);
+			this->panel4->Name = L"panel4";
+			this->panel4->Size = System::Drawing::Size(363, 109);
+			this->panel4->TabIndex = 34;
+			// 
+			// pictureBox20
+			// 
+			this->pictureBox20->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox20.BackgroundImage")));
+			this->pictureBox20->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
+			this->pictureBox20->Location = System::Drawing::Point(270, 15);
+			this->pictureBox20->Name = L"pictureBox20";
+			this->pictureBox20->Size = System::Drawing::Size(80, 80);
+			this->pictureBox20->TabIndex = 35;
+			this->pictureBox20->TabStop = false;
+			// 
+			// pictureBox19
+			// 
+			this->pictureBox19->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox19.BackgroundImage")));
+			this->pictureBox19->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
+			this->pictureBox19->Location = System::Drawing::Point(184, 15);
+			this->pictureBox19->Name = L"pictureBox19";
+			this->pictureBox19->Size = System::Drawing::Size(80, 80);
+			this->pictureBox19->TabIndex = 35;
+			this->pictureBox19->TabStop = false;
+			// 
+			// pictureBox18
+			// 
+			this->pictureBox18->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox18.BackgroundImage")));
+			this->pictureBox18->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
+			this->pictureBox18->Location = System::Drawing::Point(98, 15);
+			this->pictureBox18->Name = L"pictureBox18";
+			this->pictureBox18->Size = System::Drawing::Size(80, 80);
+			this->pictureBox18->TabIndex = 35;
+			this->pictureBox18->TabStop = false;
+			// 
+			// pictureBox17
+			// 
+			this->pictureBox17->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox17.BackgroundImage")));
+			this->pictureBox17->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
+			this->pictureBox17->Location = System::Drawing::Point(12, 15);
+			this->pictureBox17->Name = L"pictureBox17";
+			this->pictureBox17->Size = System::Drawing::Size(80, 80);
+			this->pictureBox17->TabIndex = 35;
+			this->pictureBox17->TabStop = false;
 			// 
 			// Game
 			// 
@@ -795,7 +1074,8 @@ namespace Project2 {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::White;
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
-			this->ClientSize = System::Drawing::Size(841, 499);
+			this->ClientSize = System::Drawing::Size(1339, 499);
+			this->Controls->Add(this->panel4);
 			this->Controls->Add(this->panel3);
 			this->Controls->Add(this->panel2);
 			this->Controls->Add(this->label3);
@@ -806,6 +1086,7 @@ namespace Project2 {
 			this->Controls->Add(this->panel1);
 			this->Name = L"Game";
 			this->Text = L"Game";
+			this->Load += gcnew System::EventHandler(this, &Game::Game_Load);
 			this->panel1->ResumeLayout(false);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
@@ -818,8 +1099,20 @@ namespace Project2 {
 			this->nextpanel->ResumeLayout(false);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox9))->EndInit();
 			this->panel2->ResumeLayout(false);
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox16))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox15))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox13))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox12))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox14))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox11))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox10))->EndInit();
 			this->panel3->ResumeLayout(false);
 			this->panel3->PerformLayout();
+			this->panel4->ResumeLayout(false);
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox20))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox19))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox18))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox17))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -935,6 +1228,8 @@ private: System::Void pictureBox9_DoubleClick(System::Object^  sender, System::E
 		// Aucune option sélectionnée, afficher un message d'erreur
 		MessageBox::Show("Veuillez sélectionner une option (forme ou couleur) pour effectuer un décalage.");
 	}
+}
+private: System::Void Game_Load(System::Object^  sender, System::EventArgs^  e) {
 }
 };
 }
