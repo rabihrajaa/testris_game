@@ -1,3 +1,16 @@
 ﻿  Auth.cpp
-  Auth.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
-  Project2.vcxproj -> C:\Users\rajaa\source\repos\Project2\x64\Debug\Project2.exe
+c:\users\rajaa\source\repos\project2\project2\game.h(68): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\rajaa\source\repos\project2\project2\signeup.h(426): error C2065: 'Auth': undeclared identifier
+c:\users\rajaa\source\repos\project2\project2\signeup.h(426): error C2065: 'auth': undeclared identifier
+c:\users\rajaa\source\repos\project2\project2\signeup.h(426): error C2061: syntax error: identifier 'Auth'
+c:\users\rajaa\source\repos\project2\project2\signeup.h(427): error C2065: 'auth': undeclared identifier
+c:\users\rajaa\source\repos\project2\project2\signeup.h(428): error C3867: 'System::Windows::Forms::Form::Close': non-standard syntax; use '&' to create a pointer to member
+  Signeup.cpp
+c:\users\rajaa\source\repos\project2\project2\game.h(68): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\rajaa\source\repos\project2\project2\auth.h(444): error C2065: 'Signeup': undeclared identifier
+c:\users\rajaa\source\repos\project2\project2\auth.h(444): error C2065: 'signUpForm': undeclared identifier
+c:\users\rajaa\source\repos\project2\project2\auth.h(444): error C2061: syntax error: identifier 'Signeup'
+c:\users\rajaa\source\repos\project2\project2\auth.h(447): error C2065: 'signUpForm': undeclared identifier
+c:\users\rajaa\source\repos\project2\project2\signeup.h(428): error C3867: 'System::Windows::Forms::Form::Close': non-standard syntax; use '&' to create a pointer to member
+  User.cpp
+  Generating Code...

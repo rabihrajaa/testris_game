@@ -1,5 +1,8 @@
 #pragma once
 
+#include "Home.h"
+#include "Signeup.h"
+
 namespace Project2 {
 
 	using namespace System;
@@ -8,6 +11,7 @@ namespace Project2 {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::Data::SqlClient;
 
 	/// <summary>
 	/// Summary for Auth
@@ -156,18 +160,17 @@ namespace Project2 {
 			this->button2->TabIndex = 5;
 			this->button2->Text = L"Signe up";
 			this->button2->UseVisualStyleBackColor = true;
+			this->button2->Click += gcnew System::EventHandler(this, &Auth::button2_Click);
 			// 
 			// linkLabel1
 			// 
-			this->linkLabel1->ActiveLinkColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(128)),
-				static_cast<System::Int32>(static_cast<System::Byte>(64)), static_cast<System::Int32>(static_cast<System::Byte>(0)));
+			this->linkLabel1->ActiveLinkColor = System::Drawing::Color::Blue;
 			this->linkLabel1->AutoSize = true;
 			this->linkLabel1->BackColor = System::Drawing::Color::Transparent;
 			this->linkLabel1->Font = (gcnew System::Drawing::Font(L"MV Boli", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->linkLabel1->LinkColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(64)), static_cast<System::Int32>(static_cast<System::Byte>(0)),
-				static_cast<System::Int32>(static_cast<System::Byte>(0)));
-			this->linkLabel1->Location = System::Drawing::Point(342, 367);
+			this->linkLabel1->LinkColor = System::Drawing::Color::Navy;
+			this->linkLabel1->Location = System::Drawing::Point(175, 365);
 			this->linkLabel1->Name = L"linkLabel1";
 			this->linkLabel1->Size = System::Drawing::Size(148, 21);
 			this->linkLabel1->TabIndex = 4;
@@ -201,6 +204,7 @@ namespace Project2 {
 			this->button1->TabIndex = 2;
 			this->button1->Text = L"Login";
 			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &Auth::button1_Click);
 			// 
 			// textBox2
 			// 
@@ -425,7 +429,7 @@ namespace Project2 {
 	}
 	private: System::Void panel1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
 		// Créer une brosse semi-transparente de couleur bleue
-		Color semiTransparentColor = Color::FromArgb(150, 43, 52, 103);
+		Color semiTransparentColor = Color::FromArgb(170, 0, 0, 0);
 		SolidBrush^ brush = gcnew SolidBrush(semiTransparentColor);
 
 		// Récupérer les dimensions du panneau
@@ -433,7 +437,21 @@ namespace Project2 {
 		int height = panel1->Height;
 
 		// Dessiner un rectangle semi-transparent à l'intérieur du panneau
-		e->Graphics->FillRectangle(brush, Rectangle(0, 0, width, height));
+		e->Graphics->FillRectangle(brush, System::Drawing::Rectangle(0, 0, width, height));
 	}
-	};
+	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
+		// Créer une instance de la nouvelle fenêtre SignUp
+		Signeup^ signUpForm = gcnew Signeup();
+		this->Hide();
+		// Afficher la nouvelle fenêtre
+		signUpForm->Show();
+	}
+private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
+	// Créer une instance de la nouvelle fenêtre SignUp
+	Home^ home = gcnew Home();
+	this->Close();
+	// Afficher la nouvelle fenêtre
+	home->Show();
+}
+};
 }
