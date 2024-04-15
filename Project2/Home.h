@@ -148,6 +148,7 @@ namespace Project2 {
 			this->label7->Size = System::Drawing::Size(101, 108);
 			this->label7->TabIndex = 7;
 			this->label7->Text = L"R";
+			this->label7->Click += gcnew System::EventHandler(this, &Home::label7_Click);
 			// 
 			// label8
 			// 
@@ -297,6 +298,8 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 	Game^ gameForm = gcnew Game();
 	// Afficher la fenêtre "Game"
 	gameForm->Show();
+}
+private: System::Void label7_Click(System::Object^  sender, System::EventArgs^  e) {
 }
 };
 }

@@ -1,16 +1,3 @@
-﻿  Auth.cpp
-c:\users\rajaa\source\repos\project2\project2\game.h(68): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\rajaa\source\repos\project2\project2\signeup.h(426): error C2065: 'Auth': undeclared identifier
-c:\users\rajaa\source\repos\project2\project2\signeup.h(426): error C2065: 'auth': undeclared identifier
-c:\users\rajaa\source\repos\project2\project2\signeup.h(426): error C2061: syntax error: identifier 'Auth'
-c:\users\rajaa\source\repos\project2\project2\signeup.h(427): error C2065: 'auth': undeclared identifier
-c:\users\rajaa\source\repos\project2\project2\signeup.h(428): error C3867: 'System::Windows::Forms::Form::Close': non-standard syntax; use '&' to create a pointer to member
-  Signeup.cpp
-c:\users\rajaa\source\repos\project2\project2\game.h(68): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\rajaa\source\repos\project2\project2\auth.h(444): error C2065: 'Signeup': undeclared identifier
-c:\users\rajaa\source\repos\project2\project2\auth.h(444): error C2065: 'signUpForm': undeclared identifier
-c:\users\rajaa\source\repos\project2\project2\auth.h(444): error C2061: syntax error: identifier 'Signeup'
-c:\users\rajaa\source\repos\project2\project2\auth.h(447): error C2065: 'signUpForm': undeclared identifier
-c:\users\rajaa\source\repos\project2\project2\signeup.h(428): error C3867: 'System::Windows::Forms::Form::Close': non-standard syntax; use '&' to create a pointer to member
-  User.cpp
-  Generating Code...
+﻿  User.cpp
+c:\users\rajaa\source\repos\project2\project2\user.cpp(54): error C2440: 'initializing': cannot convert from 'System::String ^' to 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+  c:\users\rajaa\source\repos\project2\project2\user.cpp(54): note: No constructor could take the source type, or constructor overload resolution was ambiguous

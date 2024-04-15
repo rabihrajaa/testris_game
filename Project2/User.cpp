@@ -6,9 +6,94 @@
 #include <regex> // Pour la validation de l'e-mail
 #include <string>
 
-User::User(std::string username, std::string firstName, std::string lastName, std::string email, std::string password)
-	: username(username), firstName(firstName), lastName(lastName), email(email), password(password) {
+
+using namespace System;
+using namespace System::Data::SqlClient;
+using namespace System::Windows::Forms;
+
+User::User(String^ username, String^ firstName, String^ lastName, String^ email, String^ password)
+    : username(gcnew String(username)), firstName(gcnew String(firstName)), lastName(gcnew String(lastName)), email(gcnew String(email)), password(gcnew String(password)) {
+    // Initialize class members if needed
+}
+
+User::User() {
 	// Initialisez les membres de la classe si nécessaire
+	username = "";
+	firstName = "";
+	lastName = "";
+	email = "";
+	password = "";
+}
+
+
+bool User::InsertUser(String^ username, String^ firstName, String^ lastName, String^ email, String^ password) {
+	// Check data validity
+	if (String::IsNullOrEmpty(username) || String::IsNullOrEmpty(firstName) || String::IsNullOrEmpty(lastName) ||
+		String::IsNullOrEmpty(email) || String::IsNullOrEmpty(password)) {
+		MessageBox::Show("All fields must be filled.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		return false;
+	}
+
+	std::string usernameStr = msclr::interop::marshal_as<std::string>(username);
+	std::string firstNameStr = msclr::interop::marshal_as<std::string>(firstName);
+	std::string lastNameStr = msclr::interop::marshal_as<std::string>(lastName);
+	std::string emailStr = msclr::interop::marshal_as<std::string>(email);
+	std::string passwordStr = msclr::interop::marshal_as<std::string>(password);
+
+	if (!IsValidEmail(emailStr)) {
+		MessageBox::Show("Invalid email address.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		return false;
+	}
+
+	if (!IsStrongPassword(passwordStr)) {
+		MessageBox::Show("Password must be at least 8 characters long and contain uppercase, lowercase, digits, and special characters.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		return false;
+	}
+
+	// Encrypt password
+	std::string encryptedPassword = EncryptPassword(passwordStr);
+
+	try {
+		SqlConnection^ connection = DatabaseConnection::GetConnection();
+		SqlCommand^ command = gcnew SqlCommand();
+		command->Connection = connection;
+
+		connection->Open();
+
+		String^ query = "INSERT INTO users (username, firstname, lastname, email, password) VALUES (@username, @firstName, @lastName, @email, @password)";
+		command->CommandText = query;
+		command->Parameters->AddWithValue("@username", username);
+		command->Parameters->AddWithValue("@firstName", firstName);
+		command->Parameters->AddWithValue("@lastName", lastName);
+		command->Parameters->AddWithValue("@email", email);
+		command->Parameters->AddWithValue("@password", gcnew String(encryptedPassword.c_str()));
+
+		command->ExecuteNonQuery();
+
+		connection->Close();
+
+		MessageBox::Show("User inserted successfully.", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
+		return true;
+	}
+	catch (Exception^ ex) {
+		Console::WriteLine("Error: " + ex->Message);
+		MessageBox::Show("Database error.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		return false;
+	}
+	return false;
+}
+
+bool User::IsValidEmail(const std::string& email) {
+	// Regular expression for email validation
+	std::regex pattern(R"([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})");
+	return std::regex_match(email, pattern);
+}
+
+bool User::IsStrongPassword(const std::string& password) {
+	// Check if password has minimum length of 8 characters and contains at least one uppercase, one lowercase, one digit, and one special character
+	return password.length() >= 8 && std::regex_search(password, std::regex("[A-Z]")) &&
+		std::regex_search(password, std::regex("[a-z]")) && std::regex_search(password, std::regex("[0-9]")) &&
+		std::regex_search(password, std::regex("[^a-zA-Z0-9]"));
 }
 
 // Fonction de cryptage de mot de passe (à remplacer par un vrai algorithme de cryptage)
@@ -54,25 +139,7 @@ std::string decryptPassword(const std::string& encryptedPassword) {
 	return decryptedPassword;
 }
 
-
-// Vérifie si l'e-mail est valide
-bool isValidEmail(const std::string& email) {
-	// Expression régulière pour la validation de l'e-mail
-	std::regex pattern(R"([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})");
-	return std::regex_match(email, pattern);
-}
-
-// Vérifie si le mot de passe est fort
-bool isStrongPassword(const std::string& password) {
-	// Vérifie si le mot de passe a une longueur minimale de 8 caractères et contient au moins une majuscule, une minuscule, un chiffre et un caractère spécial
-	return password.length() >= 8 && std::regex_search(password, std::regex("[A-Z]")) && std::regex_search(password, std::regex("[a-z]")) &&
-		std::regex_search(password, std::regex("[0-9]")) && std::regex_search(password, std::regex("[^a-zA-Z0-9]"));
-}
-
-User* User::GetUserByUsername(std::string username) {
-	User* user = nullptr;
-	String^ managedUsername = gcnew String(username.c_str());
-
+bool User::CheckLogin(System::String^ username, System::String^ password) {
 	try {
 		SqlConnection^ connection = DatabaseConnection::GetConnection();
 		SqlCommand^ command = gcnew SqlCommand();
@@ -80,24 +147,29 @@ User* User::GetUserByUsername(std::string username) {
 
 		connection->Open();
 
-		String^ query = "SELECT * FROM user WHERE username = @username";
+
+		String^ query = "SELECT * FROM users WHERE username = @username";
 		command->CommandText = query;
-		command->Parameters->AddWithValue("@username", managedUsername);
+		command->Parameters->AddWithValue("@username", username);
 
 		SqlDataReader^ reader = command->ExecuteReader();
 
 		if (reader->Read()) {
-			std::string fetchedUsername = msclr::interop::marshal_as<std::string>(reader["username"]->ToString());
-			std::string firstName = msclr::interop::marshal_as<std::string>(reader["first_name"]->ToString());
-			std::string lastName = msclr::interop::marshal_as<std::string>(reader["last_name"]->ToString());
-			std::string email = msclr::interop::marshal_as<std::string>(reader["email"]->ToString());
-			std::string password = msclr::interop::marshal_as<std::string>(reader["password"]->ToString());
+			String^ fetchedPassword = safe_cast<String^>(reader["password"]);
 
-			user = new User(fetchedUsername, firstName, lastName, email, password);
+			// Compare passwords
+			if (fetchedPassword == password) {
+				MessageBox::Show("Login successful.", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
+				return true;
+			}
+			else {
+				MessageBox::Show("Incorrect username or password.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return false;
+			}
 		}
 		else {
-			// Afficher un message si l'utilisateur n'est pas trouvé
-			MessageBox(NULL, L"L'utilisateur n'existe pas.", L"Erreur", MB_OK | MB_ICONERROR);
+			MessageBox::Show("Incorrect username or password.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return false;
 		}
 
 		reader->Close();
@@ -105,43 +177,13 @@ User* User::GetUserByUsername(std::string username) {
 	}
 	catch (Exception^ ex) {
 		Console::WriteLine("Error: " + ex->Message);
-		// Afficher un message en cas d'erreur de base de données
-		MessageBox(NULL, L"Erreur de base de données.", L"Erreur", MB_OK | MB_ICONERROR);
+		MessageBox::Show("Database error.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		return false;
 	}
-
-	return user;
+	return false;
 }
 
-bool User::InsertUser(std::string username, std::string firstName, std::string lastName, std::string email, std::string password) {
-	// Vérification de la validité des données
-	if (username.empty() || firstName.empty() || lastName.empty() || email.empty() || password.empty()) {
-		MessageBox(NULL, L"Tous les champs doivent être remplis.", L"Erreur", MB_OK | MB_ICONERROR);
-		return false;
-	}
-
-	if (!isValidEmail(email)) {
-		MessageBox(NULL, L"L'adresse e-mail n'est pas valide.", L"Erreur", MB_OK | MB_ICONERROR);
-		return false;
-	}
-
-	if (!isStrongPassword(password)) {
-		MessageBox(NULL, L"Le mot de passe doit contenir au moins 8 caractères, y compris une majuscule, une minuscule, un chiffre et un caractère spécial.", L"Erreur", MB_OK | MB_ICONERROR);
-		return false;
-	}
-
-	// Vérification de l'existence de l'e-mail et de l'unicité du nom d'utilisateur dans la base de données
-	// Vous devez implémenter ces vérifications en fonction de la structure de votre base de données.
-
-	// Crypter le mot de passe avant de l'insérer dans la base de données
-	std::string encryptedPassword = encryptPassword(password);
-
-	// Insérer l'utilisateur dans la base de données avec le mot de passe crypté
-	String^ managedUsername = gcnew String(username.c_str());
-	String^ managedFirstName = gcnew String(firstName.c_str());
-	String^ managedLastName = gcnew String(lastName.c_str());
-	String^ managedEmail = gcnew String(email.c_str());
-	String^ managedPassword = gcnew String(encryptedPassword.c_str());
-
+User^ User::GetUserByUsername(String^ username) {
 	try {
 		SqlConnection^ connection = DatabaseConnection::GetConnection();
 		SqlCommand^ command = gcnew SqlCommand();
@@ -149,29 +191,34 @@ bool User::InsertUser(std::string username, std::string firstName, std::string l
 
 		connection->Open();
 
-		String^ query = "INSERT INTO users (username, firstname, lastname, email, password) VALUES (@username, @firstName, @lastName, @email, @password)";
+		String^ query = "SELECT * FROM users WHERE username = @username";
 		command->CommandText = query;
-		command->Parameters->AddWithValue("@username", managedUsername);
-		command->Parameters->AddWithValue("@firstName", managedFirstName);
-		command->Parameters->AddWithValue("@lastName", managedLastName);
-		command->Parameters->AddWithValue("@email", managedEmail);
-		command->Parameters->AddWithValue("@password", managedPassword);
+		command->Parameters->AddWithValue("@username", username);
 
-		command->ExecuteNonQuery();
+		SqlDataReader^ reader = command->ExecuteReader();
 
+		if (reader->Read()) {
+			String^ fetchedUsername = safe_cast<String^>(reader["username"]);
+			String^ firstName = safe_cast<String^>(reader["first_name"]);
+			String^ lastName = safe_cast<String^>(reader["last_name"]);
+			String^ email = safe_cast<String^>(reader["email"]);
+			String^ password = safe_cast<String^>(reader["password"]);
+
+			return gcnew User(fetchedUsername, firstName, lastName, email, password);
+		}
+		else {
+			MessageBox::Show("User not found.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return nullptr;
+		}
+
+		reader->Close();
 		connection->Close();
-
-		std::cout << "User inserted into the database." << std::endl;
-		MessageBox(NULL, L"Utilisateur inséré avec succès.", L"Succès", MB_OK | MB_ICONINFORMATION);
-		// Réafficher la fenêtre d'authentification
-		// Créer une instance de la nouvelle fenêtre SignUp
-
-		return true;
 	}
 	catch (Exception^ ex) {
 		Console::WriteLine("Error: " + ex->Message);
-		// Afficher un message en cas d'erreur de base de données
-		MessageBox(NULL, L"Erreur de base de données.", L"Erreur", MB_OK | MB_ICONERROR);
-		return false;
+		MessageBox::Show("Database error.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		return nullptr;
 	}
+	return nullptr;
 }
+

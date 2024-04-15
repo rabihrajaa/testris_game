@@ -1,28 +1,29 @@
-// User.h
+
 #pragma once
 #include <string>
 
-class User {
+public ref class User {
 private:
-	std::string username;
-	std::string firstName;
-	std::string lastName;
-	std::string email;
-	std::string password;
+	System::String^ username;
+	System::String^ firstName;
+	System::String^ lastName;
+	System::String^ email;
+	System::String^ password;
 
 public:
-	User(std::string username, std::string firstName, std::string lastName, std::string email, std::string password);
-
+	User(System::String^ username, System::String^ firstName, System::String^ lastName, System::String^ email, System::String^ password);
+	User();
 	// CRUD methods
-	static bool InsertUser(std::string username, std::string firstName, std::string lastName, std::string email, std::string password);
-	static User* GetUserByUsername(std::string username);
-	bool UpdateUser();
-	bool DeleteUser();
+	static bool InsertUser(System::String^ username, System::String^ firstName, System::String^ lastName, System::String^ email, System::String^ password);
+	static User^ GetUserByUsername(System::String^ username);
+	static bool CheckLogin(System::String^ username, System::String^ password);
 
-	// Getters and Setters
-	std::string GetUsername();
-	std::string GetFirstName();
-	std::string GetLastName();
-	std::string GetEmail();
-	std::string GetPassword();
+
+private:
+	// Helper methods
+	static System::String^ EncryptPassword(std::string& password);
+	static System::String^ DecryptPassword(std::string& encryptedPassword);
+
+	static bool IsValidEmail(const std::string& email);
+	static bool IsStrongPassword(const std::string& password);
 };
