@@ -1,3 +1,1 @@
-﻿  User.cpp
-c:\users\rajaa\source\repos\project2\project2\user.cpp(54): error C2440: 'initializing': cannot convert from 'System::String ^' to 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
-  c:\users\rajaa\source\repos\project2\project2\user.cpp(54): note: No constructor could take the source type, or constructor overload resolution was ambiguous
+﻿

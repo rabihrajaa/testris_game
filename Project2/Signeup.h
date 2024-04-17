@@ -1,6 +1,6 @@
 #pragma once
 #include "User.h"
-#include <msclr\marshal_cppstd.h> // Inclure marshal_cppstd.h pour la conversion de System::String^ en std::string
+#include <msclr\marshal_cppstd.h>
 
 namespace Project2 {
 
@@ -39,6 +39,29 @@ namespace Project2 {
 
 	protected:
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	private: System::Windows::Forms::Label^  label4;
 	private: System::Windows::Forms::Label^  label10;
 	private: System::Windows::Forms::Label^  label11;
@@ -57,6 +80,15 @@ namespace Project2 {
 	private: System::Windows::Forms::TextBox^  textBox1;
 	private: System::Windows::Forms::Label^  label3;
 	private: System::Windows::Forms::TextBox^  textBox5;
+
+
+
+
+
+
+
+
+
 
 	private:
 		/// <summary>
@@ -375,35 +407,27 @@ private: System::Void panel1_Paint(System::Object^  sender, System::Windows::For
 	// Dessiner un rectangle semi-transparent à l'intérieur du panneau
 	e->Graphics->FillRectangle(brush, System::Drawing::Rectangle(0, 0, width, height));
 }
-private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
+private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
 	// Collecte des données des textbox
-	System::String^ username = textBox1->Text;
-	System::String^ firstName = textBox3->Text;
-	System::String^ lastName = textBox4->Text;
-	System::String^ email = textBox5->Text;
-	System::String^ password = textBox2->Text;
+	std::string username = msclr::interop::marshal_as<std::string>(textBox1->Text);
+	std::string firstName = msclr::interop::marshal_as<std::string>(textBox3->Text);
+	std::string lastName = msclr::interop::marshal_as<std::string>(textBox4->Text);
+	std::string email = msclr::interop::marshal_as<std::string>(textBox5->Text);
+	std::string password = msclr::interop::marshal_as<std::string>(textBox2->Text);
 
-	// Appel de la méthode InsertUser pour insérer un nouvel utilisateur
+	// Vérification de la validité des données (vous pouvez ajouter votre propre logique de validation ici)
+
+	// Appel de la fonction InsertUser
 	bool insertionSuccessful = User::InsertUser(username, firstName, lastName, email, password);
-
-	// Vérifier si l'insertion a été réussie
 	if (insertionSuccessful) {
 		// Afficher un message ou effectuer d'autres actions si l'insertion est réussie
 		MessageBox::Show("Utilisateur inséré avec succès.", "Succès", MessageBoxButtons::OK, MessageBoxIcon::Information);
-		textBox1->Text = "";
-		textBox2->Text = "";
-		textBox3->Text = "";
-		textBox4->Text = "";
-		textBox5->Text = "";
+		this->Close();
 	}
 	else {
 		// Afficher un message d'erreur si l'insertion a échoué
 		MessageBox::Show("Erreur lors de l'insertion de l'utilisateur.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
 	}
 }
-
-
-
-
 };
 }

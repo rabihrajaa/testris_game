@@ -2,7 +2,6 @@
 
 #include "Home.h"
 #include "Signeup.h"
-#include "User.h"
 
 namespace Project2 {
 
@@ -286,6 +285,8 @@ namespace Project2 {
 			this->label6->Text = L"T";
 			// 
 			// label3
+			// 
+			this->label3->AutoSize = true;
 			this->label3->BackColor = System::Drawing::Color::Transparent;
 			this->label3->Font = (gcnew System::Drawing::Font(L"Poor Richard", 30, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
@@ -296,8 +297,6 @@ namespace Project2 {
 			this->label3->Size = System::Drawing::Size(39, 47);
 			this->label3->TabIndex = 11;
 			this->label3->Text = L"T";
-			// 
-			this->label3->AutoSize = true;
 			// 
 			// label5
 			// 
@@ -443,6 +442,7 @@ namespace Project2 {
 	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
 		// Créer une instance de la nouvelle fenêtre SignUp
 		Signeup^ signUpForm = gcnew Signeup();
+		// Afficher la nouvelle fenêtre
 		signUpForm->Show();
 	}
 private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {

@@ -1,29 +1,29 @@
-
+// User.h
 #pragma once
 #include <string>
 
-public ref class User {
+class User {
 private:
-	System::String^ username;
-	System::String^ firstName;
-	System::String^ lastName;
-	System::String^ email;
-	System::String^ password;
+	std::string username;
+	std::string firstName;
+	std::string lastName;
+	std::string email;
+	std::string password;
 
 public:
-	User(System::String^ username, System::String^ firstName, System::String^ lastName, System::String^ email, System::String^ password);
-	User();
+	User(std::string username, std::string firstName, std::string lastName, std::string email, std::string password);
+
 	// CRUD methods
-	static bool InsertUser(System::String^ username, System::String^ firstName, System::String^ lastName, System::String^ email, System::String^ password);
-	static User^ GetUserByUsername(System::String^ username);
+	static bool InsertUser(std::string username, std::string firstName, std::string lastName, std::string email, std::string password);
+	static User* GetUserByUsername(std::string username);
+	bool UpdateUser();
+	bool DeleteUser();
 	static bool CheckLogin(System::String^ username, System::String^ password);
-
-
-private:
-	// Helper methods
-	static System::String^ EncryptPassword(std::string& password);
-	static System::String^ DecryptPassword(std::string& encryptedPassword);
-
-	static bool IsValidEmail(const std::string& email);
-	static bool IsStrongPassword(const std::string& password);
+	static void UpdateLevel(int newLevel);
+	// Getters and Setters
+	std::string GetUsername();
+	std::string GetFirstName();
+	std::string GetLastName();
+	std::string GetEmail();
+	std::string GetPassword();
 };

@@ -1,4 +1,5 @@
 #pragma once
+#include "User.h"
 #include <vector> // Pour utiliser std::vector
 #include <cstdlib> // Pour utiliser la fonction rand
 #include <ctime> // Pour initialiser le générateur de nombres aléatoires
@@ -53,6 +54,7 @@ namespace Project2 {
 	private: System::Windows::Forms::PictureBox^  pictureBox19;
 	private: System::Windows::Forms::PictureBox^  pictureBox18;
 	private: System::Windows::Forms::PictureBox^  pictureBox17;
+	private: System::Windows::Forms::Label^  label4;
 			 int score = 0;
 	public:
 		Game(void)
@@ -614,6 +616,7 @@ namespace Project2 {
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
@@ -698,11 +701,12 @@ namespace Project2 {
 				static_cast<System::Byte>(0)));
 			this->label3->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(0)),
 				static_cast<System::Int32>(static_cast<System::Byte>(64)));
-			this->label3->Location = System::Drawing::Point(598, 419);
+			this->label3->Location = System::Drawing::Point(537, 400);
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(175, 46);
 			this->label3->TabIndex = 14;
 			this->label3->Text = L"Score: 0";
+			this->label3->TextChanged += gcnew System::EventHandler(this, &Game::label3_TextChanged);
 			// 
 			// panel1
 			// 
@@ -710,12 +714,25 @@ namespace Project2 {
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->panel1->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
 			this->panel1->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
+			this->panel1->Controls->Add(this->label4);
 			this->panel1->Controls->Add(this->button1);
 			this->panel1->Location = System::Drawing::Point(3, 12);
 			this->panel1->Name = L"panel1";
 			this->panel1->Size = System::Drawing::Size(1336, 64);
 			this->panel1->TabIndex = 15;
 			this->panel1->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Game::panel1_Paint);
+			// 
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->Font = (gcnew System::Drawing::Font(L"Showcard Gothic", 21.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label4->ForeColor = System::Drawing::Color::Crimson;
+			this->label4->Location = System::Drawing::Point(12, 7);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(129, 36);
+			this->label4->TabIndex = 35;
+			this->label4->Text = L"Level: 0";
 			// 
 			// pictureBox1
 			// 
@@ -759,6 +776,7 @@ namespace Project2 {
 			this->pictureBox3->Size = System::Drawing::Size(80, 80);
 			this->pictureBox3->TabIndex = 19;
 			this->pictureBox3->TabStop = false;
+			this->pictureBox3->DoubleClick += gcnew System::EventHandler(this, &Game::pictureBox3_DoubleClick);
 			// 
 			// pictureBox4
 			// 
@@ -769,6 +787,7 @@ namespace Project2 {
 			this->pictureBox4->Size = System::Drawing::Size(80, 80);
 			this->pictureBox4->TabIndex = 20;
 			this->pictureBox4->TabStop = false;
+			this->pictureBox4->DoubleClick += gcnew System::EventHandler(this, &Game::pictureBox4_DoubleClick);
 			// 
 			// pictureBox5
 			// 
@@ -779,6 +798,8 @@ namespace Project2 {
 			this->pictureBox5->Size = System::Drawing::Size(80, 80);
 			this->pictureBox5->TabIndex = 21;
 			this->pictureBox5->TabStop = false;
+			this->pictureBox5->Click += gcnew System::EventHandler(this, &Game::pictureBox5_Click);
+			this->pictureBox5->DoubleClick += gcnew System::EventHandler(this, &Game::pictureBox5_DoubleClick);
 			// 
 			// pictureBox6
 			// 
@@ -789,6 +810,7 @@ namespace Project2 {
 			this->pictureBox6->Size = System::Drawing::Size(80, 80);
 			this->pictureBox6->TabIndex = 22;
 			this->pictureBox6->TabStop = false;
+			this->pictureBox6->DoubleClick += gcnew System::EventHandler(this, &Game::pictureBox6_DoubleClick);
 			// 
 			// pictureBox7
 			// 
@@ -799,6 +821,7 @@ namespace Project2 {
 			this->pictureBox7->Size = System::Drawing::Size(80, 80);
 			this->pictureBox7->TabIndex = 23;
 			this->pictureBox7->TabStop = false;
+			this->pictureBox7->DoubleClick += gcnew System::EventHandler(this, &Game::pictureBox7_DoubleClick);
 			// 
 			// pictureBox8
 			// 
@@ -810,6 +833,7 @@ namespace Project2 {
 			this->pictureBox8->TabIndex = 24;
 			this->pictureBox8->TabStop = false;
 			this->pictureBox8->Click += gcnew System::EventHandler(this, &Game::pictureBox8_Click);
+			this->pictureBox8->DoubleClick += gcnew System::EventHandler(this, &Game::pictureBox8_DoubleClick);
 			// 
 			// button2
 			// 
@@ -893,6 +917,7 @@ namespace Project2 {
 			this->pictureBox16->Size = System::Drawing::Size(80, 80);
 			this->pictureBox16->TabIndex = 28;
 			this->pictureBox16->TabStop = false;
+			this->pictureBox16->Click += gcnew System::EventHandler(this, &Game::pictureBox16_Click);
 			this->pictureBox16->DoubleClick += gcnew System::EventHandler(this, &Game::pictureBox9_DoubleClick);
 			// 
 			// pictureBox15
@@ -904,7 +929,7 @@ namespace Project2 {
 			this->pictureBox15->Size = System::Drawing::Size(80, 80);
 			this->pictureBox15->TabIndex = 28;
 			this->pictureBox15->TabStop = false;
-			this->pictureBox15->DoubleClick += gcnew System::EventHandler(this, &Game::pictureBox9_DoubleClick);
+			this->pictureBox15->DoubleClick += gcnew System::EventHandler(this, &Game::pictureBox15_DoubleClick);
 			// 
 			// pictureBox13
 			// 
@@ -915,7 +940,7 @@ namespace Project2 {
 			this->pictureBox13->Size = System::Drawing::Size(80, 80);
 			this->pictureBox13->TabIndex = 28;
 			this->pictureBox13->TabStop = false;
-			this->pictureBox13->DoubleClick += gcnew System::EventHandler(this, &Game::pictureBox9_DoubleClick);
+			this->pictureBox13->DoubleClick += gcnew System::EventHandler(this, &Game::pictureBox13_DoubleClick);
 			// 
 			// pictureBox12
 			// 
@@ -926,7 +951,7 @@ namespace Project2 {
 			this->pictureBox12->Size = System::Drawing::Size(80, 80);
 			this->pictureBox12->TabIndex = 28;
 			this->pictureBox12->TabStop = false;
-			this->pictureBox12->DoubleClick += gcnew System::EventHandler(this, &Game::pictureBox9_DoubleClick);
+			this->pictureBox12->DoubleClick += gcnew System::EventHandler(this, &Game::pictureBox12_DoubleClick);
 			// 
 			// pictureBox14
 			// 
@@ -937,7 +962,7 @@ namespace Project2 {
 			this->pictureBox14->Size = System::Drawing::Size(80, 80);
 			this->pictureBox14->TabIndex = 28;
 			this->pictureBox14->TabStop = false;
-			this->pictureBox14->DoubleClick += gcnew System::EventHandler(this, &Game::pictureBox9_DoubleClick);
+			this->pictureBox14->DoubleClick += gcnew System::EventHandler(this, &Game::pictureBox14_DoubleClick);
 			// 
 			// pictureBox11
 			// 
@@ -948,7 +973,7 @@ namespace Project2 {
 			this->pictureBox11->Size = System::Drawing::Size(80, 80);
 			this->pictureBox11->TabIndex = 28;
 			this->pictureBox11->TabStop = false;
-			this->pictureBox11->DoubleClick += gcnew System::EventHandler(this, &Game::pictureBox9_DoubleClick);
+			this->pictureBox11->DoubleClick += gcnew System::EventHandler(this, &Game::pictureBox11_DoubleClick);
 			// 
 			// pictureBox10
 			// 
@@ -959,7 +984,7 @@ namespace Project2 {
 			this->pictureBox10->Size = System::Drawing::Size(80, 80);
 			this->pictureBox10->TabIndex = 28;
 			this->pictureBox10->TabStop = false;
-			this->pictureBox10->DoubleClick += gcnew System::EventHandler(this, &Game::pictureBox9_DoubleClick);
+			this->pictureBox10->DoubleClick += gcnew System::EventHandler(this, &Game::pictureBox10_DoubleClick);
 			// 
 			// label2
 			// 
@@ -1088,6 +1113,7 @@ namespace Project2 {
 			this->Text = L"Game";
 			this->Load += gcnew System::EventHandler(this, &Game::Game_Load);
 			this->panel1->ResumeLayout(false);
+			this->panel1->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->EndInit();
@@ -1229,7 +1255,311 @@ private: System::Void pictureBox9_DoubleClick(System::Object^  sender, System::E
 		MessageBox::Show("Veuillez sélectionner une option (forme ou couleur) pour effectuer un décalage.");
 	}
 }
+
+
 private: System::Void Game_Load(System::Object^  sender, System::EventArgs^  e) {
 }
+private: System::Void label3_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+	// Vérifier si le score atteint 10 ou 20
+
+	if (score == 10) {
+		User::UpdateLevel(1);
+		label4->Text = "Level: 1";
+	}
+	else if (score == 20) {
+		User::UpdateLevel(2);
+		label4->Text = "Level: 2";
+	}
+	else if (score == 40) {
+		User::UpdateLevel(2);
+		label4->Text = "Level: 3";
+	}
+	else if (score == 60) {
+		User::UpdateLevel(2);
+		label4->Text = "Level: 4";
+	}
+	else if (score == 90) {
+		User::UpdateLevel(2);
+		label4->Text = "Level: 5";
+	}
+	else if (score == 120) {
+		User::UpdateLevel(2);
+		label4->Text = "Level: 6";
+	}
+}
+
+
+private: System::Void pictureBox3_DoubleClick(System::Object^  sender, System::EventArgs^  e) {
+	String^ forme;
+	String^ color;
+	ObtenirFormeEtCouleur(pictureBox3, forme, color);
+	// Utilisez les variables forme et color comme vous le souhaitez
+	MessageBox::Show(forme);
+	// Vérifier si l'utilisateur veut effectuer un décalage en fonction de la forme ou de la couleur
+	if (radioButton1->Checked) {
+		// Décalage en fonction de la forme
+		DecalageForme(forme);
+	}
+	else if (radioButton2->Checked) {
+		DecalageCouleur(color);
+	}
+	else {
+		// Aucune option sélectionnée, afficher un message d'erreur
+		MessageBox::Show("Veuillez sélectionner une option (forme ou couleur) pour effectuer un décalage.");
+	}
+}
+private: System::Void pictureBox4_DoubleClick(System::Object^  sender, System::EventArgs^  e) {
+	String^ forme;
+	String^ color;
+	ObtenirFormeEtCouleur(pictureBox4, forme, color);
+	// Utilisez les variables forme et color comme vous le souhaitez
+	MessageBox::Show(forme);
+	// Vérifier si l'utilisateur veut effectuer un décalage en fonction de la forme ou de la couleur
+	if (radioButton1->Checked) {
+		// Décalage en fonction de la forme
+		DecalageForme(forme);
+	}
+	else if (radioButton2->Checked) {
+		DecalageCouleur(color);
+	}
+	else {
+		// Aucune option sélectionnée, afficher un message d'erreur
+		MessageBox::Show("Veuillez sélectionner une option (forme ou couleur) pour effectuer un décalage.");
+	}
+}
+
+
+private: System::Void pictureBox5_Click(System::Object^  sender, System::EventArgs^  e) {
+
+}
+
+private: System::Void pictureBox5_DoubleClick(System::Object^  sender, System::EventArgs^  e) {
+	String^ forme;
+	String^ color;
+	ObtenirFormeEtCouleur(pictureBox5, forme, color);
+	// Utilisez les variables forme et color comme vous le souhaitez
+	MessageBox::Show(forme);
+	// Vérifier si l'utilisateur veut effectuer un décalage en fonction de la forme ou de la couleur
+	if (radioButton1->Checked) {
+		// Décalage en fonction de la forme
+		DecalageForme(forme);
+	}
+	else if (radioButton2->Checked) {
+		DecalageCouleur(color);
+	}
+	else {
+		// Aucune option sélectionnée, afficher un message d'erreur
+		MessageBox::Show("Veuillez sélectionner une option (forme ou couleur) pour effectuer un décalage.");
+	}
+}
+
+
+private: System::Void pictureBox6_DoubleClick(System::Object^  sender, System::EventArgs^  e) {
+	String^ forme;
+	String^ color;
+	ObtenirFormeEtCouleur(pictureBox6, forme, color);
+	// Utilisez les variables forme et color comme vous le souhaitez
+	MessageBox::Show(forme);
+	// Vérifier si l'utilisateur veut effectuer un décalage en fonction de la forme ou de la couleur
+	if (radioButton1->Checked) {
+		// Décalage en fonction de la forme
+		DecalageForme(forme);
+	}
+	else if (radioButton2->Checked) {
+		DecalageCouleur(color);
+	}
+	else {
+		// Aucune option sélectionnée, afficher un message d'erreur
+		MessageBox::Show("Veuillez sélectionner une option (forme ou couleur) pour effectuer un décalage.");
+	}
+}
+
+private: System::Void pictureBox7_DoubleClick(System::Object^  sender, System::EventArgs^  e) {
+	String^ forme;
+	String^ color;
+	ObtenirFormeEtCouleur(pictureBox7, forme, color);
+	// Utilisez les variables forme et color comme vous le souhaitez
+	MessageBox::Show(forme);
+	// Vérifier si l'utilisateur veut effectuer un décalage en fonction de la forme ou de la couleur
+	if (radioButton1->Checked) {
+		// Décalage en fonction de la forme
+		DecalageForme(forme);
+	}
+	else if (radioButton2->Checked) {
+		DecalageCouleur(color);
+	}
+	else {
+		// Aucune option sélectionnée, afficher un message d'erreur
+		MessageBox::Show("Veuillez sélectionner une option (forme ou couleur) pour effectuer un décalage.");
+	}
+}
+
+
+private: System::Void pictureBox8_DoubleClick(System::Object^  sender, System::EventArgs^  e) {
+	String^ forme;
+	String^ color;
+	ObtenirFormeEtCouleur(pictureBox8, forme, color);
+	// Utilisez les variables forme et color comme vous le souhaitez
+	MessageBox::Show(forme);
+	// Vérifier si l'utilisateur veut effectuer un décalage en fonction de la forme ou de la couleur
+	if (radioButton1->Checked) {
+		// Décalage en fonction de la forme
+		DecalageForme(forme);
+	}
+	else if (radioButton2->Checked) {
+		DecalageCouleur(color);
+	}
+	else {
+		// Aucune option sélectionnée, afficher un message d'erreur
+		MessageBox::Show("Veuillez sélectionner une option (forme ou couleur) pour effectuer un décalage.");
+	}
+}
+
+
+private: System::Void pictureBox10_DoubleClick(System::Object^  sender, System::EventArgs^  e) {
+	String^ forme;
+	String^ color;
+	ObtenirFormeEtCouleur(pictureBox10, forme, color);
+	// Utilisez les variables forme et color comme vous le souhaitez
+	MessageBox::Show(forme);
+	// Vérifier si l'utilisateur veut effectuer un décalage en fonction de la forme ou de la couleur
+	if (radioButton1->Checked) {
+		// Décalage en fonction de la forme
+		DecalageForme(forme);
+	}
+	else if (radioButton2->Checked) {
+		DecalageCouleur(color);
+	}
+	else {
+		// Aucune option sélectionnée, afficher un message d'erreur
+		MessageBox::Show("Veuillez sélectionner une option (forme ou couleur) pour effectuer un décalage.");
+	}
+}
+
+
+private: System::Void pictureBox11_DoubleClick(System::Object^  sender, System::EventArgs^  e) {
+	String^ forme;
+	String^ color;
+	ObtenirFormeEtCouleur(pictureBox11, forme, color);
+	// Utilisez les variables forme et color comme vous le souhaitez
+	MessageBox::Show(forme);
+	// Vérifier si l'utilisateur veut effectuer un décalage en fonction de la forme ou de la couleur
+	if (radioButton1->Checked) {
+		// Décalage en fonction de la forme
+		DecalageForme(forme);
+	}
+	else if (radioButton2->Checked) {
+		DecalageCouleur(color);
+	}
+	else {
+		// Aucune option sélectionnée, afficher un message d'erreur
+		MessageBox::Show("Veuillez sélectionner une option (forme ou couleur) pour effectuer un décalage.");
+	}
+}
+
+
+private: System::Void pictureBox12_DoubleClick(System::Object^  sender, System::EventArgs^  e) {
+	String^ forme;
+	String^ color;
+	ObtenirFormeEtCouleur(pictureBox12, forme, color);
+	// Utilisez les variables forme et color comme vous le souhaitez
+	MessageBox::Show(forme);
+	// Vérifier si l'utilisateur veut effectuer un décalage en fonction de la forme ou de la couleur
+	if (radioButton1->Checked) {
+		// Décalage en fonction de la forme
+		DecalageForme(forme);
+	}
+	else if (radioButton2->Checked) {
+		DecalageCouleur(color);
+	}
+	else {
+		// Aucune option sélectionnée, afficher un message d'erreur
+		MessageBox::Show("Veuillez sélectionner une option (forme ou couleur) pour effectuer un décalage.");
+	}
+}
+
+
+private: System::Void pictureBox13_DoubleClick(System::Object^  sender, System::EventArgs^  e) {
+	String^ forme;
+	String^ color;
+	ObtenirFormeEtCouleur(pictureBox13, forme, color);
+	// Utilisez les variables forme et color comme vous le souhaitez
+	MessageBox::Show(forme);
+	// Vérifier si l'utilisateur veut effectuer un décalage en fonction de la forme ou de la couleur
+	if (radioButton1->Checked) {
+		// Décalage en fonction de la forme
+		DecalageForme(forme);
+	}
+	else if (radioButton2->Checked) {
+		DecalageCouleur(color);
+	}
+	else {
+		// Aucune option sélectionnée, afficher un message d'erreur
+		MessageBox::Show("Veuillez sélectionner une option (forme ou couleur) pour effectuer un décalage.");
+	}
+}
+
+
+private: System::Void pictureBox14_DoubleClick(System::Object^  sender, System::EventArgs^  e) {
+	String^ forme;
+	String^ color;
+	ObtenirFormeEtCouleur(pictureBox14, forme, color);
+	// Utilisez les variables forme et color comme vous le souhaitez
+	MessageBox::Show(forme);
+	// Vérifier si l'utilisateur veut effectuer un décalage en fonction de la forme ou de la couleur
+	if (radioButton1->Checked) {
+		// Décalage en fonction de la forme
+		DecalageForme(forme);
+	}
+	else if (radioButton2->Checked) {
+		DecalageCouleur(color);
+	}
+	else {
+		// Aucune option sélectionnée, afficher un message d'erreur
+		MessageBox::Show("Veuillez sélectionner une option (forme ou couleur) pour effectuer un décalage.");
+	}
+}
+private: System::Void pictureBox15_DoubleClick(System::Object^  sender, System::EventArgs^  e) {
+	String^ forme;
+	String^ color;
+	ObtenirFormeEtCouleur(pictureBox15, forme, color);
+	// Utilisez les variables forme et color comme vous le souhaitez
+	MessageBox::Show(forme);
+	// Vérifier si l'utilisateur veut effectuer un décalage en fonction de la forme ou de la couleur
+	if (radioButton1->Checked) {
+		// Décalage en fonction de la forme
+		DecalageForme(forme);
+	}
+	else if (radioButton2->Checked) {
+		DecalageCouleur(color);
+	}
+	else {
+		// Aucune option sélectionnée, afficher un message d'erreur
+		MessageBox::Show("Veuillez sélectionner une option (forme ou couleur) pour effectuer un décalage.");
+	}
+}
+
+
+private: System::Void pictureBox16_Click(System::Object^  sender, System::EventArgs^  e) {
+	String^ forme;
+	String^ color;
+	ObtenirFormeEtCouleur(pictureBox16, forme, color);
+	// Utilisez les variables forme et color comme vous le souhaitez
+	MessageBox::Show(forme);
+	// Vérifier si l'utilisateur veut effectuer un décalage en fonction de la forme ou de la couleur
+	if (radioButton1->Checked) {
+		// Décalage en fonction de la forme
+
+		DecalageForme(forme);
+	}
+	else if (radioButton2->Checked) {
+		DecalageCouleur(color);
+	}
+	else {
+		// Aucune option sélectionnée, afficher un message d'erreur
+		MessageBox::Show("Veuillez sélectionner une option (forme ou couleur) pour effectuer un décalage.");
+	}
+}
+
 };
 }
