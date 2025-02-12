@@ -1,15 +1,6 @@
 
 # Tetriste Game - Mini Project Report
 
-## Table of Contents
-1. [📖 Introduction](#introduction)
-2. [🎮 Features](#features)
-3. [🛠️ Technologies Used](#technologies-used)
-4. [📥 Installation](#installation)
-5. [🎲 How to Play](#how-to-play)
-6. [📊 Class Diagram](#class-diagram)
-7. [🎥 Demo Video](#demo-video)
-8. [🏁 Conclusion](#conclusion)
 
 ---
 
