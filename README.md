@@ -2,8 +2,6 @@
 # Tetriste Game - Mini Project Report
 
 
----
-
 ## 📖 Introduction
 This project, titled **Tetriste**, is a mini-game developed as part of the **Data Structures** course for the academic year 2023/2024. The game is designed to challenge players to create repeated patterns using colored and shaped pieces. The project was developed using **C++** and incorporates advanced data structures such as linked lists to manage game pieces and their interactions.
 
