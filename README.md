@@ -9,7 +9,19 @@ This project, titled **Tetriste**, is a mini-game developed as part of the **Dat
 
 The game features user authentication, a dynamic game board, and various functionalities such as piece insertion, shifting, and chaining. The project also includes a scoring system, saving/loading game states, and a leaderboard for top scores.
 
+## 📊 Class Diagram
+Below is the class diagram for the Tetriste game, illustrating the relationships between the main classes and their attributes/methods.
 
+![Class Diagram](class_diagram.png)
+
+---
+
+## 🎥 Demo Video
+A demonstration of the game's interfaces and functionalities can be found in the video below:
+
+[![Tetriste Game Demo](https://drive.google.com/file/d/1aJqc_I53M4r7C6yEAEd5-25OnFCTPrL1/view?usp=sharing)
+
+---
 
 ## 🎮 Features
 ### User Functionalities
@@ -37,6 +49,16 @@ The game features user authentication, a dynamic game board, and various functio
 
 ---
 
+## 🎲 How to Play
+1. **👤 Register/Login**: Create an account or log in to an existing one.
+2. **🎮 Start Game**: Begin a new game or continue from a saved state.
+3. **🧩 Insert Pieces**: Place randomly generated pieces on the board.
+4. **🔄 Shift Pieces**: Use the shift functionality to rearrange pieces based on shape or color.
+5. **🎯 Create Patterns**: Form repeated patterns to score points.
+6. **💾 Save Progress**: Save your game state to continue later.
+7. **🏆 View Leaderboard**: Check the top scores after completing the game.
+
+---
 ## 📥 Installation
 1. **📂 Clone the Repository**:
    ```bash
@@ -48,31 +70,6 @@ The game features user authentication, a dynamic game board, and various functio
    - Build the solution to compile the game.
 4. **▶️ Run the Game**:
    - Execute the compiled binary to start the game.
-
----
-
-## 🎲 How to Play
-1. **👤 Register/Login**: Create an account or log in to an existing one.
-2. **🎮 Start Game**: Begin a new game or continue from a saved state.
-3. **🧩 Insert Pieces**: Place randomly generated pieces on the board.
-4. **🔄 Shift Pieces**: Use the shift functionality to rearrange pieces based on shape or color.
-5. **🎯 Create Patterns**: Form repeated patterns to score points.
-6. **💾 Save Progress**: Save your game state to continue later.
-7. **🏆 View Leaderboard**: Check the top scores after completing the game.
-
----
-
-## 📊 Class Diagram
-Below is the class diagram for the Tetriste game, illustrating the relationships between the main classes and their attributes/methods.
-
-![Class Diagram](class_diagram.png)
-
----
-
-## 🎥 Demo Video
-A demonstration of the game's interfaces and functionalities can be found in the video below:
-
-[![Tetriste Game Demo]([https://drive.google.com/file/d/VIDEO_ID/view](https://drive.google.com/file/d/1aJqc_I53M4r7C6yEAEd5-25OnFCTPrL1/view?usp=sharing)
 
 ---
 
