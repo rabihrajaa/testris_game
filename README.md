@@ -9,7 +9,7 @@ This project, titled **Tetriste**, is a mini-game developed as part of the **Dat
 
 The game features user authentication, a dynamic game board, and various functionalities such as piece insertion, shifting, and chaining. The project also includes a scoring system, saving/loading game states, and a leaderboard for top scores.
 
----
+
 
 ## 🎮 Features
 ### User Functionalities
@@ -72,7 +72,7 @@ Below is the class diagram for the Tetriste game, illustrating the relationships
 ## 🎥 Demo Video
 A demonstration of the game's interfaces and functionalities can be found in the video below:
 
-[![Tetriste Game Demo](https://img.youtube.com/vi/your-video-id/0.jpg)](https://www.youtube.com/watch?v=your-video-id)
+[![Tetriste Game Demo]([https://drive.google.com/file/d/VIDEO_ID/view](https://drive.google.com/file/d/1aJqc_I53M4r7C6yEAEd5-25OnFCTPrL1/view?usp=sharing))
 
 ---
 
