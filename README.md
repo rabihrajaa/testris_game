@@ -17,7 +17,7 @@ Below is the class diagram for the Tetriste game, illustrating the relationships
 ## 🎥 Demo Video
 A demonstration of the game's interfaces and functionalities can be found in the video below:
 
-[![Tetriste Game Demo](https://drive.google.com/file/d/1aJqc_I53M4r7C6yEAEd5-25OnFCTPrL1/view?usp=sharing)
+https://drive.google.com/file/d/1aJqc_I53M4r7C6yEAEd5-25OnFCTPrL1/view?usp=sharing
 
 ---
 
